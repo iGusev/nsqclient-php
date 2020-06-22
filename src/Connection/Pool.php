@@ -87,9 +87,9 @@ class Pool
     /**
      * @return LoopInterface
      */
-    public static function getEvLoop()
+    public static function getEvLoop($recreate = false)
     {
-        if (is_null(self::$evLoops)) {
+        if (is_null(self::$evLoops) || $recreate) {
             self::$evLoops = Factory::create();
             GracefulShutdown::init(self::$evLoops);
         }
@@ -101,7 +101,7 @@ class Pool
      */
     public static function setEvAttached()
     {
-        self::$evAttached ++;
+        self::$evAttached++;
     }
 
     /**
@@ -109,7 +109,7 @@ class Pool
      */
     public static function setEvDetached()
     {
-        self::$evAttached --;
+        self::$evAttached--;
         if (self::$evAttached <= 0) {
             Logger::ins()->info('ALL event detached .. perform shutdown');
             self::$evLoops && self::$evLoops->stop();
