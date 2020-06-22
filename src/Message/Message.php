@@ -62,7 +62,7 @@ class Message implements MessageInterface
         $this->payload = $payload;
         $this->attempts = $attempts;
         $this->timestamp = $timestamp;
-        $this->data = $id ? json_decode($payload, true) : json_encode($payload);
+        $this->data = $id ? unserialize($payload) : serialize($payload);
         $this->nsqd = $nsqd;
     }
 
