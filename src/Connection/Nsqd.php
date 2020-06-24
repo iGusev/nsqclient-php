@@ -211,7 +211,7 @@ class Nsqd
 
         $this->connTCP->write(Command::identify(getmypid(), gethostname(), sprintf('%s/%s', SDK::NAME, SDK::VERSION)));
         $this->connTCP->write(Command::subscribe($this->topic, $channel));
-        $this->connTCP->write(Command::ready(10));
+        $this->connTCP->write(Command::ready(1));
 
         Pool::setEvAttached();
 
